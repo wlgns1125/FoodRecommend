@@ -1,0 +1,137 @@
+CREATE TABLE `Untitled` (
+	`Key`	VARCHAR(500)	NOT NULL,
+	`Field`	VARCHAR(500)	NULL
+);
+
+CREATE TABLE `Untitled2` (
+	`Key`	INT	NOT NULL,
+	`Key2`	VARCHAR(500)	NOT NULL,
+	`Key3`	INT	NOT NULL,
+	`Field`	VARCHAR(500)	NULL,
+	`Field2`	INT	NULL,
+	`Field3`	INT	NULL
+);
+
+CREATE TABLE `foods` (
+	`foodNum`	INT	NOT NULL,
+	`weatherNum`	INT	NOT NULL,
+	`seasonNum`	INT	NOT NULL,
+	`foodName`	VARCHAR(500)	NULL,
+	`youtubeLink`	VARCHAR(500)	NULL,
+	`imgLink`	VARCHAR(500)	NULL
+);
+
+CREATE TABLE `Untitled4` (
+	`Key`	VARCHAR(500)	NOT NULL,
+	`Field`	VARCHAR(500)	NULL
+);
+
+CREATE TABLE `Untitled5` (
+	`Key2`	INT	NOT NULL,
+	`Field`	TEXT	NULL
+);
+
+CREATE TABLE `Untitled6` (
+	`Key2`	INT	NOT NULL,
+	`Field2`	VARCHAR(500)	NULL,
+	`Field3`	VARCHAR(500)	NULL
+);
+
+CREATE TABLE `Untitled7` (
+	`Key`	INT	NOT NULL,
+	`Key2`	INT	NOT NULL
+);
+
+CREATE TABLE `Untitled8` (
+	`Key`	INT	NOT NULL,
+	`Field`	VARCHAR(500)	NULL
+);
+
+CREATE TABLE `Untitled9` (
+	`Key`	INT	NOT NULL,
+	`Field`	VARCHAR(500)	NULL
+);
+
+ALTER TABLE `Untitled` ADD CONSTRAINT `PK_UNTITLED` PRIMARY KEY (
+	`Key`
+);
+
+ALTER TABLE `Untitled2` ADD CONSTRAINT `PK_UNTITLED2` PRIMARY KEY (
+	`Key`,
+	`Key2`,
+	`Key3`
+);
+
+ALTER TABLE `foods` ADD CONSTRAINT `PK_FOODS` PRIMARY KEY (
+	`foodNum`
+);
+
+ALTER TABLE `Untitled4` ADD CONSTRAINT `PK_UNTITLED4` PRIMARY KEY (
+	`Key`
+);
+
+ALTER TABLE `Untitled5` ADD CONSTRAINT `PK_UNTITLED5` PRIMARY KEY (
+	`Key2`
+);
+
+ALTER TABLE `Untitled6` ADD CONSTRAINT `PK_UNTITLED6` PRIMARY KEY (
+	`Key2`
+);
+
+ALTER TABLE `Untitled7` ADD CONSTRAINT `PK_UNTITLED7` PRIMARY KEY (
+	`Key`,
+	`Key2`
+);
+
+ALTER TABLE `Untitled8` ADD CONSTRAINT `PK_UNTITLED8` PRIMARY KEY (
+	`Key`
+);
+
+ALTER TABLE `Untitled9` ADD CONSTRAINT `PK_UNTITLED9` PRIMARY KEY (
+	`Key`
+);
+
+ALTER TABLE `Untitled2` ADD CONSTRAINT `FK_Untitled_TO_Untitled2_1` FOREIGN KEY (
+	`Key2`
+)
+REFERENCES `Untitled` (
+	`Key`
+);
+
+ALTER TABLE `Untitled2` ADD CONSTRAINT `FK_foods_TO_Untitled2_1` FOREIGN KEY (
+	`Key3`
+)
+REFERENCES `foods` (
+	`foodNum`
+);
+
+ALTER TABLE `Untitled5` ADD CONSTRAINT `FK_foods_TO_Untitled5_1` FOREIGN KEY (
+	`Key2`
+)
+REFERENCES `foods` (
+	`foodNum`
+);
+
+ALTER TABLE `Untitled7` ADD CONSTRAINT `FK_foods_TO_Untitled7_1` FOREIGN KEY (
+	`Key`
+)
+REFERENCES `foods` (
+	`foodNum`
+);
+
+ALTER TABLE `Untitled7` ADD CONSTRAINT `FK_Untitled6_TO_Untitled7_1` FOREIGN KEY (
+	`Key2`
+)
+REFERENCES `Untitled6` (
+	`Key2`
+);
+
+
+
+1	1	1	열무김치 맛있게 담그는법(전라도김치)	123	https://recipe1.ezmember.co.kr/cache/recipe/2016/05/12/e0cccf2b018385c53f4feab8b5d45ee31_m.jpg
+2	2	2	요리초보도 실패없는 백종원 오이소박이	1234	https://recipe1.ezmember.co.kr/cache/recipe/2018/09/19/6ecd78db5f3f2623bbf73db9af871eb81_m.jpg
+3	3	3	생생정보통 잡채 황금레시피 이거였네	12345	https://recipe1.ezmember.co.kr/cache/recipe/2017/11/14/a2d4839b5743d121d4d2b46fdbc9aa5b1_m.jpg
+4	4	4	엄마의 레시피, 소고기 미역국 끓이는 법	123456	https://recipe1.ezmember.co.kr/cache/recipe/2017/07/28/860484b80033e84a3584a366ae903a0d1_m.jpg
+5	5	5	에어프라이어로 군고구마 굽는 법	1234567	https://recipe1.ezmember.co.kr/cache/recipe/2018/11/11/e30e0971a9f32d493d027cd7cb97f5121_m.JPG
+6	6	6	잡채 만드는 법	231456	https://recipe1.ezmember.co.kr/cache/recipe/2019/02/03/b967403fe8c42c5814ea0042207a2c931_m.jpg
+7	7	7	소불고기 황금 양념 레시피	2134	https://recipe1.ezmember.co.kr/cache/recipe/2017/11/07/ca8c24608189aaf9d376f14b3f3be57c1_m.jpg
