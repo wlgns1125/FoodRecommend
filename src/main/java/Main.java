@@ -7,6 +7,10 @@ import persistence.MyBatisConnectionFactory;
 
 import java.util.List;
 
+/**
+ * 이 클래스는 DB연결 함수확인용
+ */
+
 public class Main {
 
     public static void main(String args[]){

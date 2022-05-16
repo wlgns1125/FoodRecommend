@@ -81,56 +81,57 @@ public class Server {
 
                     byte[] buf = recommendFood.getPacket();
                     is.read(buf);
-                    int packetType = buf[0];
-                    int packetUserType = buf[1];
+                    int protocolCode = buf[0];
+                    int protocolType = buf[1];
 
-                    recommendFood.setPacket(packetType, packetUserType, buf); // 패킷 타입을 Protocol 객체의 packet 멤버변수에 buf를 복사
+                    recommendFood.setPacket(protocolCode, protocolType, buf); // 패킷 타입을 Protocol 객체의 packet 멤버변수에 buf를 복사
+                    switch (protocolCode) {
+                        case CODE_RECOMMENDFOOD:
+                            switch (protocolType) {
+                                case TYPE_REQUEST:
+                                    System.out.println("요리추천패킷정상수신");
+                                    Protocol proto = new Protocol(TYPE_RESPONSE, CODE_RECOMMENDFOOD);
+                                    int pos = 2;
 
-                    switch (packetType) {
-                        case TYPE_REQUEST:
-                            System.out.println("요리추천패킷정상수신");
-                            Protocol proto = new Protocol(TYPE_RESPONSE, CODE_RECOMMENDFOOD);
-                            int pos = 2;
-
-                            byte[] sendBuf = proto.getPacket();//실제 최종 보낼 패킷
-
-
-                            //temp += testDAO.getRandom();
-                            String oneFoodName;
-                            String oneFoodURLName;
-                            int oneFoodNameLength;
-                            int oneFoodURLNameLength;
+                                    byte[] sendBuf = proto.getPacket();//실제 최종 보낼 패킷
 
 
+                                    //temp += testDAO.getRandom();
+                                    String oneFoodName;
+                                    String oneFoodURLName;
+                                    int oneFoodNameLength;
+                                    int oneFoodURLNameLength;
 
-                            List<TestDTO> tmp = testDAO.getRandom();
 
-                            for(int i = 0; i < tmp.size(); i++){
-                                oneFoodName = tmp.get(i).getFoodName();
-                                System.out.println(oneFoodNameLength = oneFoodName.getBytes().length);
-                                oneFoodURLName = tmp.get(i).getImgLink();
-                                System.out.println(oneFoodURLNameLength = oneFoodURLName.getBytes().length);
 
-                                byte[] temp1 = proto.intToByteArray(oneFoodNameLength); // 이름 길이
-                                System.arraycopy(temp1, 0, sendBuf, pos, 4);
-                                pos += 4; // 4증가
+                                    List<TestDTO> tmp = testDAO.getRandom();
 
-                                byte[] temp2 = oneFoodName.getBytes(); //이름 실제 데이터
-                                System.arraycopy(temp2, 0, sendBuf, pos, temp2.length);
-                                pos += temp2.length;
+                                    for(int i = 0; i < tmp.size(); i++){
+                                        oneFoodName = tmp.get(i).getFoodName();
+                                        System.out.println(oneFoodNameLength = oneFoodName.getBytes().length);
+                                        oneFoodURLName = tmp.get(i).getImgLink();
+                                        System.out.println(oneFoodURLNameLength = oneFoodURLName.getBytes().length);
 
-                                byte[] temp3 = proto.intToByteArray(oneFoodURLNameLength); //URL 길이
-                                System.arraycopy(temp3, 0, sendBuf, pos, 4);
-                                pos += 4;
+                                        byte[] temp1 = proto.intToByteArray(oneFoodNameLength); // 이름 길이
+                                        System.arraycopy(temp1, 0, sendBuf, pos, 4);
+                                        pos += 4; // 4증가
 
-                                byte[] temp4 = oneFoodURLName.getBytes(); //URL 실제 데이터
-                                System.arraycopy(temp4, 0, sendBuf, pos, temp4.length);
-                                pos += temp4.length;
+                                        byte[] temp2 = oneFoodName.getBytes(); //이름 실제 데이터
+                                        System.arraycopy(temp2, 0, sendBuf, pos, temp2.length);
+                                        pos += temp2.length;
 
-                            }
+                                        byte[] temp3 = proto.intToByteArray(oneFoodURLNameLength); //URL 길이
+                                        System.arraycopy(temp3, 0, sendBuf, pos, 4);
+                                        pos += 4;
 
-                            bos.write(sendBuf);
-                            bos.flush();
+                                        byte[] temp4 = oneFoodURLName.getBytes(); //URL 실제 데이터
+                                        System.arraycopy(temp4, 0, sendBuf, pos, temp4.length);
+                                        pos += temp4.length;
+
+                                    }
+
+                                    bos.write(sendBuf);
+                                    bos.flush();
 
 
 
@@ -145,8 +146,11 @@ public class Server {
                                     recommendFood.setData(temp);
                                     os.write(recommendFood.getPacket());
                             }*/
+                                    break;
+                            }
                             break;
                     }
+
 
 
 //                    isEnd = true;
