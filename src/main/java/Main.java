@@ -2,6 +2,7 @@
 //import persistence.dao.*;
 import persistence.DAO.TestDAO;
 import persistence.DTO.TestDTO;
+import persistence.GpsTransfer;
 import persistence.MyBatisConnectionFactory;
 //import service.*;
 
@@ -19,16 +20,18 @@ public class Main {
         TestDTO testDTO = new TestDTO();
         TestDAO test = new TestDAO(MyBatisConnectionFactory.getSqlSessionFactory());
 
+        GpsTransfer gpsTransfer = new GpsTransfer(33.500946412305076, 126.54663058817043);
+        gpsTransfer.transfer();
+        System.out.println("결과 : " + gpsTransfer.getxLat() + "," + gpsTransfer.getyLon());
+
         List<TestDTO> arr;
         String s = "";
-        s += test.getRandom();
+//        s += test.getRandom();
 
-//        String[] arr = test.음식추천();
 
-//        for(int i=0; i< arr.size(); i++){
-//            System.out.println(arr.get(i));
-//        }
-        System.out.println(s);
+
+
+//        System.out.println(s);
 
         //추가
 
