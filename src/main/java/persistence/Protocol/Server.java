@@ -1,12 +1,11 @@
 package persistence.Protocol;
 
-import persistence.DAO.TestDAO;
-import persistence.DTO.TestDTO;
+import persistence.DAO.RecipeDAO;
+import persistence.DTO.RecipeDTO;
 import persistence.MyBatisConnectionFactory;
 
 import java.net.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static persistence.Protocol.Protocol.*;
@@ -61,7 +60,7 @@ public class Server {
 
             Protocol recommendFood = new Protocol(TYPE_REQUEST, CODE_RECOMMENDFOOD);
 
-            TestDAO testDAO = new TestDAO(MyBatisConnectionFactory.getSqlSessionFactory());
+            RecipeDAO testDAO = new RecipeDAO(MyBatisConnectionFactory.getSqlSessionFactory());
 
             try {
                 OutputStream os = conn.getOutputStream();
@@ -104,7 +103,7 @@ public class Server {
 
 
 
-                                    List<TestDTO> tmp = testDAO.getRandom();
+                                    List<RecipeDTO> tmp = testDAO.getRandom();
 
                                     for(int i = 0; i < tmp.size(); i++){
                                         oneFoodName = tmp.get(i).getFoodName();

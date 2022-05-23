@@ -2,26 +2,23 @@ package persistence.DAO;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import persistence.DTO.TestDTO;
-import persistence.PooledDataSource;
-import persistence.mapper.TestMapper;
+import persistence.DTO.RecipeDTO;
+import persistence.mapper.RecipeMapper;
 
-import javax.sql.DataSource;
-import java.sql.*;
 import java.util.List;
 
-public class TestDAO {
+public class RecipeDAO {
 
     private SqlSessionFactory sqlSessionFactory = null;
 
-    public TestDAO(SqlSessionFactory sqlSessionFactory){
+    public RecipeDAO(SqlSessionFactory sqlSessionFactory){
         this.sqlSessionFactory = sqlSessionFactory;
     }
 
-    public List<TestDTO> getRandom(){
+    public List<RecipeDTO> getRandom(){
         SqlSession session = sqlSessionFactory.openSession();
-        TestMapper mapper = session.getMapper(TestMapper.class);
-        List<TestDTO> rnd = mapper.getRandom();
+        RecipeMapper mapper = session.getMapper(RecipeMapper.class);
+        List<RecipeDTO> rnd = mapper.getRandom();
         return rnd;
     }
 //    final DataSource ds = PooledDataSource.getDataSource();

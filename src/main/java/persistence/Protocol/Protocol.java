@@ -16,7 +16,7 @@ public class Protocol {
     public static final int LEN_PROTOCOL_CODE = 1;
     public static final int LEN_PROTOCOL_BODY = 3000;
 
-    // *****헤더에 길이정보를 저장하는 구 방식에서 바디에 길이정보를 같이 저장하는 신 방식으로 변경함.******
+    // 중요!!! *****헤더에 길이정보를 저장하는 구 방식에서 바디에 길이정보를 같이 저장하는 신 방식으로 변경함.******
     // 헤더에는 TYPE과 CODE만 저장함
 
     protected int protocolType;
@@ -67,7 +67,7 @@ public class Protocol {
                         packet = new byte[LEN_PROTOCOL_TYPE + LEN_PROTOCOL_CODE];
                         break;
 
-                    case TYPE_RESPONSE_ERROR: //응답 (로그인 실패)
+                    case TYPE_RESPONSE_ERROR: //응답 (로그인 실패(없는계정))
                         packet = new byte[LEN_PROTOCOL_TYPE + LEN_PROTOCOL_CODE];
                         break;
                 }
@@ -86,7 +86,7 @@ public class Protocol {
                         packet = new byte[LEN_PROTOCOL_TYPE + LEN_PROTOCOL_CODE];
                         break;
 
-                    case TYPE_RESPONSE_ERROR: //응답 (회원가입 실패)
+                    case TYPE_RESPONSE_ERROR: //응답 (회원가입 실패 (중복아이디 존재))
                         packet = new byte[LEN_PROTOCOL_TYPE + LEN_PROTOCOL_CODE];
                         break;
 

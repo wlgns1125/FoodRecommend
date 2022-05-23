@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.testMapper">
-    <resultMap id="result" type="persistence.DTO.TestDTO">
+    <resultMap id="result" type="persistence.DTO.RecipeDTO">
         <result property="foodName" column="foodName"/>
         <result property="youtubeLink" column="youtubeLink"/>
     </resultMap>

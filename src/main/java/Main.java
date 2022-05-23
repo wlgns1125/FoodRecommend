@@ -1,7 +1,7 @@
 //import persistence.MyBatisConnectionFactory;
 //import persistence.dao.*;
-import persistence.DAO.TestDAO;
-import persistence.DTO.TestDTO;
+import persistence.DAO.RecipeDAO;
+import persistence.DTO.RecipeDTO;
 import persistence.GpsTransfer;
 import persistence.MyBatisConnectionFactory;
 //import service.*;
@@ -17,21 +17,21 @@ public class Main {
     public static void main(String args[]){
 
         //DAO 생성
-        TestDTO testDTO = new TestDTO();
-        TestDAO test = new TestDAO(MyBatisConnectionFactory.getSqlSessionFactory());
+        RecipeDTO testDTO = new RecipeDTO();
+        RecipeDAO test = new RecipeDAO(MyBatisConnectionFactory.getSqlSessionFactory());
 
-        GpsTransfer gpsTransfer = new GpsTransfer(33.500946412305076, 126.54663058817043);
-        gpsTransfer.transfer();
-        System.out.println("결과 : " + gpsTransfer.getxLat() + "," + gpsTransfer.getyLon());
+//        GpsTransfer gpsTransfer = new GpsTransfer(33.500946412305076, 126.54663058817043);
+//        gpsTransfer.transfer();
+//        System.out.println("결과 : " + gpsTransfer.getxLat() + "," + gpsTransfer.getyLon());
 
-        List<TestDTO> arr;
+        List<RecipeDTO> arr;
         String s = "";
-//        s += test.getRandom();
+        s += test.getRandom();
 
 
 
 
-//        System.out.println(s);
+        System.out.println(s);
 
         //추가
 

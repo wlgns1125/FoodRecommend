@@ -19,6 +19,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="sqlmapper/test.xml"/>
+        <mapper resource="sqlmapper/recipe.xml"/>
     </mappers>
 </configuration>

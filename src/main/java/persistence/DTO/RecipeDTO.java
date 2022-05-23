@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-public class TestDTO {
+public class RecipeDTO {
     private int foodNum;
     private int weatherNum;
     private int seasonNum;
