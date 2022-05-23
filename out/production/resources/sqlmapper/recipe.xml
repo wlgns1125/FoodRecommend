@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.testMapper">
+    <resultMap id="result" type="persistence.DTO.RecipeDTO">
+        <result property="foodName" column="foodName"/>
+        <result property="youtubeLink" column="youtubeLink"/>
+    </resultMap>
+
+    <select id = "selectRandom" resultMap="result">
+        SELECT foodName, imgLink from foods order by rand() limit 4;
+    </select>
+
+
+
+</mapper>
+
