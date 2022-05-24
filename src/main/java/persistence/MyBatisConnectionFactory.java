@@ -3,6 +3,7 @@ package persistence;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import persistence.mapper.MemberMapper;
 import persistence.mapper.RecipeMapper;
 
 import java.io.FileNotFoundException;
@@ -18,6 +19,7 @@ public class MyBatisConnectionFactory {
             if (sqlSessionFactory == null) {
                 sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
                 Class[] mappers={
+                        MemberMapper.class,
                         RecipeMapper.class,
                 };
                 for(Class mapper:mappers){
