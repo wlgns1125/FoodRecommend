@@ -143,7 +143,7 @@ public class Server {
                                         pos += 4;
 
                                         byte[] temp6 = oneYoutubeLinkName.getBytes(); //URL 실제 데이터
-                                        System.arraycopy(temp6, 0, sendBuf, pos, temp5.length);
+                                        System.arraycopy(temp6, 0, sendBuf, pos, temp6.length);
                                         pos += temp6.length;
 
                                     }
