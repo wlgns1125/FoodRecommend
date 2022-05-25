@@ -113,6 +113,8 @@ public class Server {
                                     List<RecipeDTO> tmp = recipeDAO.getRandom();
 
                                     for(int i = 0; i < tmp.size(); i++){
+
+
                                         oneFoodName = tmp.get(i).getFoodName();
                                         System.out.println(oneFoodNameLength = oneFoodName.getBytes().length);
                                         oneFoodURLName = tmp.get(i).getImgLink();
@@ -122,29 +124,29 @@ public class Server {
 
 
 
-                                        byte[] temp1 = proto.intToByteArray(oneFoodNameLength); // 이름 길이
-                                        System.arraycopy(temp1, 0, sendBuf, pos, 4);
+                                        byte[] temp5 = proto.intToByteArray(oneFoodNameLength); // 이름 길이
+                                        System.arraycopy(temp5, 0, sendBuf, pos, 4);
                                         pos += 4; // 4증가
 
-                                        byte[] temp2 = oneFoodName.getBytes(); //이름 실제 데이터
-                                        System.arraycopy(temp2, 0, sendBuf, pos, temp2.length);
-                                        pos += temp2.length;
-
-                                        byte[] temp3 = proto.intToByteArray(oneFoodURLNameLength); //URL 길이
-                                        System.arraycopy(temp3, 0, sendBuf, pos, 4);
-                                        pos += 4;
-
-                                        byte[] temp4 = oneFoodURLName.getBytes(); //URL 실제 데이터
-                                        System.arraycopy(temp4, 0, sendBuf, pos, temp4.length);
-                                        pos += temp4.length;
-
-                                        byte[] temp5 = proto.intToByteArray(oneYoutubeLinkLength); //youbeLink 길이
-                                        System.arraycopy(temp5, 0, sendBuf, pos, 4);
-                                        pos += 4;
-
-                                        byte[] temp6 = oneYoutubeLinkName.getBytes(); //URL 실제 데이터
+                                        byte[] temp6 = oneFoodName.getBytes(); //이름 실제 데이터
                                         System.arraycopy(temp6, 0, sendBuf, pos, temp6.length);
                                         pos += temp6.length;
+
+                                        byte[] temp7 = proto.intToByteArray(oneFoodURLNameLength); //URL 길이
+                                        System.arraycopy(temp7, 0, sendBuf, pos, 4);
+                                        pos += 4;
+
+                                        byte[] temp8 = oneFoodURLName.getBytes(); //URL 실제 데이터
+                                        System.arraycopy(temp8, 0, sendBuf, pos, temp8.length);
+                                        pos += temp8.length;
+
+                                        byte[] temp9 = proto.intToByteArray(oneYoutubeLinkLength); //youbeLink 길이
+                                        System.arraycopy(temp9, 0, sendBuf, pos, 4);
+                                        pos += 4;
+
+                                        byte[] temp10 = oneYoutubeLinkName.getBytes(); //URL 실제 데이터
+                                        System.arraycopy(temp10, 0, sendBuf, pos, temp10.length);
+                                        pos += temp10.length;
 
                                     }
 
