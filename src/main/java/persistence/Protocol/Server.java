@@ -103,8 +103,10 @@ public class Server {
                                     //temp += testDAO.getRandom();
                                     String oneFoodName;
                                     String oneFoodURLName;
+                                    String oneYoutubeLinkName;
                                     int oneFoodNameLength;
                                     int oneFoodURLNameLength;
+                                    int oneYoutubeLinkLength;
 
 
 
@@ -115,6 +117,10 @@ public class Server {
                                         System.out.println(oneFoodNameLength = oneFoodName.getBytes().length);
                                         oneFoodURLName = tmp.get(i).getImgLink();
                                         System.out.println(oneFoodURLNameLength = oneFoodURLName.getBytes().length);
+                                        oneYoutubeLinkName = tmp.get(i).getYoutubeLink();
+                                        System.out.println(oneYoutubeLinkLength = oneYoutubeLinkName.getBytes().length);
+
+
 
                                         byte[] temp1 = proto.intToByteArray(oneFoodNameLength); // 이름 길이
                                         System.arraycopy(temp1, 0, sendBuf, pos, 4);
@@ -131,6 +137,14 @@ public class Server {
                                         byte[] temp4 = oneFoodURLName.getBytes(); //URL 실제 데이터
                                         System.arraycopy(temp4, 0, sendBuf, pos, temp4.length);
                                         pos += temp4.length;
+
+                                        byte[] temp5 = proto.intToByteArray(oneYoutubeLinkLength); //youbeLink 길이
+                                        System.arraycopy(temp5, 0, sendBuf, pos, 4);
+                                        pos += 4;
+
+                                        byte[] temp6 = oneYoutubeLinkName.getBytes(); //URL 실제 데이터
+                                        System.arraycopy(temp6, 0, sendBuf, pos, temp5.length);
+                                        pos += temp6.length;
 
                                     }
 
@@ -182,9 +196,7 @@ public class Server {
                                     boolean loginSuccess = memberDAO.login(loginId, loginPassword);
                                     if(loginSuccess)
                                         proto = new Protocol(TYPE_RESPONSE, CODE_LOGIN);
-//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE);
                                     else
-//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE_ERROR);
                                         proto = new Protocol(TYPE_RESPONSE_ERROR, CODE_LOGIN);
 
                                     bos.write(proto.getPacket());
@@ -234,9 +246,7 @@ public class Server {
                                     boolean signUpSuccess = memberDAO.signUp(signUpId, signUpPassword);
                                     if(signUpSuccess)
                                         proto = new Protocol(TYPE_RESPONSE, CODE_SIGNUP);
-//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE);
                                     else
-//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE_ERROR);
                                         proto = new Protocol(TYPE_RESPONSE_ERROR, CODE_SIGNUP);
 
                                     bos.write(proto.getPacket());
@@ -246,14 +256,6 @@ public class Server {
                             break;
                     }
 
-
-
-//                    isEnd = true;
-//                    System.out.println(conn.getInetAddress().getHostName() + "가 종료했습니다.");
-                    
-//                            break;
-
-//                    }
 
 
                 }
