@@ -1,11 +1,13 @@
 package persistence.Protocol;
 
+import persistence.DAO.MemberDAO;
 import persistence.DAO.RecipeDAO;
 import persistence.DTO.RecipeDTO;
 import persistence.MyBatisConnectionFactory;
 
 import java.net.*;
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 import static persistence.Protocol.Protocol.*;
@@ -60,7 +62,8 @@ public class Server {
 
             Protocol recommendFood = new Protocol(TYPE_REQUEST, CODE_RECOMMENDFOOD);
 
-            RecipeDAO testDAO = new RecipeDAO(MyBatisConnectionFactory.getSqlSessionFactory());
+            RecipeDAO recipeDAO = new RecipeDAO(MyBatisConnectionFactory.getSqlSessionFactory());
+            MemberDAO memberDAO = new MemberDAO(MyBatisConnectionFactory.getSqlSessionFactory());
 
             try {
                 OutputStream os = conn.getOutputStream();
@@ -84,6 +87,7 @@ public class Server {
                     int protocolType = buf[1];
 
                     recommendFood.setPacket(protocolCode, protocolType, buf); // 패킷 타입을 Protocol 객체의 packet 멤버변수에 buf를 복사
+
                     switch (protocolCode) {
                         case CODE_RECOMMENDFOOD:
                             switch (protocolType) {
@@ -103,7 +107,7 @@ public class Server {
 
 
 
-                                    List<RecipeDTO> tmp = testDAO.getRandom();
+                                    List<RecipeDTO> tmp = recipeDAO.getRandom();
 
                                     for(int i = 0; i < tmp.size(); i++){
                                         oneFoodName = tmp.get(i).getFoodName();
@@ -132,19 +136,50 @@ public class Server {
                                     bos.write(sendBuf);
                                     bos.flush();
 
-
-
-                            /*if (temp.equals("")) {
-                                recommendFood.setProtocolCode(0);
-                                os.write(recommendFood.getPacket());
+                                    break;
                             }
-                            else {
-                                recommendFood.setProtocolCode(1);
-                                int dataLen = temp.getBytes().length;
+                            break;
 
-                                    recommendFood.setData(temp);
-                                    os.write(recommendFood.getPacket());
-                            }*/
+                        case CODE_LOGIN:
+                            switch (protocolType) {
+                                case TYPE_REQUEST:
+                                    System.out.println("로그인요청 정상수신");
+                                    Protocol proto = new Protocol(TYPE_RESPONSE, CODE_LOGIN);
+                                    String loginId = null, loginPassword = null;
+                                    int pos = 2;
+
+
+                                    int loginIdLength = proto.byteArrayToInt(Arrays.copyOfRange(buf, pos, pos + 4));
+                                    pos +=4;
+
+                                    byte[] loginIdArr = Arrays.copyOfRange(buf, pos, pos + loginIdLength);
+                                    try {
+                                            loginId = new String(loginIdArr, "UTF-8");//추출 이름 String 변환해 저장
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+                                    pos += loginIdLength;
+
+                                    int loginPasswordLength = proto.byteArrayToInt(Arrays.copyOfRange(buf, pos, pos + 4));
+                                    pos +=4;
+
+                                    byte[] loginPasswordArr = Arrays.copyOfRange(buf, pos, pos + loginPasswordLength);
+                                    try {
+                                        loginPassword = new String(loginPasswordArr, "UTF-8");//추출 이름 String 변환해 저장
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                    pos += loginPasswordLength;
+
+                                    boolean loginSuccess = memberDAO.login(loginId, loginPassword);
+                                    if(loginSuccess)
+                                        proto.setProtocolType(TYPE_RESPONSE);
+//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE);
+                                    else
+                                        proto.setProtocolType(TYPE_RESPONSE_ERROR);
+
+                                    bos.write(proto.getPacket());
+                                    bos.flush();
                                     break;
                             }
                             break;
