@@ -21,6 +21,7 @@ public class Server {
         Socket conn = null;
         ServerSocket sSocket = null;
 
+
         try {
 
             sSocket = new ServerSocket(3000, 10);
@@ -83,10 +84,10 @@ public class Server {
 
                     byte[] buf = recommendFood.getPacket();
                     is.read(buf);
-                    int protocolCode = buf[0];
-                    int protocolType = buf[1];
+                    int protocolType = buf[0];
+                    int protocolCode = buf[1];
 
-                    recommendFood.setPacket(protocolCode, protocolType, buf); // 패킷 타입을 Protocol 객체의 packet 멤버변수에 buf를 복사
+                    recommendFood.setPacket(protocolType, protocolCode, buf); // 패킷 타입을 Protocol 객체의 packet 멤버변수에 buf를 복사
 
                     switch (protocolCode) {
                         case CODE_RECOMMENDFOOD:
@@ -147,13 +148,13 @@ public class Server {
                                     Protocol proto = null;
 
 
-                                    try {
-                                        buf = proto.getPacket(TYPE_RESPONSE, CODE_LOGIN); //가독성 개선함
-                                        bis.read(buf);//수신버퍼 읽기시도후 buf배열에 읽은것 저장
-
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+//                                    try {
+//                                        //buf = proto.getPacket(TYPE_RESPONSE, CODE_LOGIN); //가독성 개선함
+//                                        //bis.read(buf);//수신버퍼 읽기시도후 buf배열에 읽은것 저장
+//
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
 
                                     int type = buf[0]; //타입
                                     System.out.println(type);
@@ -164,8 +165,8 @@ public class Server {
                                     int pos = 2;
 
 
-
-                                    int loginIdLength = proto.byteArrayToInt(Arrays.copyOfRange(buf, pos, pos + 4));
+                                    byte[] tmp = Arrays.copyOfRange(buf, pos, pos + 4);
+                                    int loginIdLength = Protocol.byteArrayToInt(tmp);
                                     pos +=4;
 
                                     byte[] loginIdArr = Arrays.copyOfRange(buf, pos, pos + loginIdLength);
@@ -176,7 +177,7 @@ public class Server {
                                         }
                                     pos += loginIdLength;
 
-                                    int loginPasswordLength = proto.byteArrayToInt(Arrays.copyOfRange(buf, pos, pos + 4));
+                                    int loginPasswordLength = Protocol.byteArrayToInt(Arrays.copyOfRange(buf, pos, pos + 4));
                                     pos +=4;
 
                                     byte[] loginPasswordArr = Arrays.copyOfRange(buf, pos, pos + loginPasswordLength);
