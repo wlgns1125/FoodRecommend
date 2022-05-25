@@ -144,9 +144,25 @@ public class Server {
                             switch (protocolType) {
                                 case TYPE_REQUEST:
                                     System.out.println("로그인요청 정상수신");
-                                    Protocol proto = new Protocol(TYPE_RESPONSE, CODE_LOGIN);
+                                    Protocol proto = null;
+
+
+                                    try {
+                                        buf = proto.getPacket(TYPE_RESPONSE, CODE_LOGIN); //가독성 개선함
+                                        bis.read(buf);//수신버퍼 읽기시도후 buf배열에 읽은것 저장
+
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    int type = buf[0]; //타입
+                                    System.out.println(type);
+                                    int code = buf[1]; //코드
+                                    System.out.println(code);
+
                                     String loginId = null, loginPassword = null;
                                     int pos = 2;
+
 
 
                                     int loginIdLength = proto.byteArrayToInt(Arrays.copyOfRange(buf, pos, pos + 4));
