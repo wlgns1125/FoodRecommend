@@ -147,15 +147,6 @@ public class Server {
                                     System.out.println("로그인요청 정상수신");
                                     Protocol proto = null;
 
-
-//                                    try {
-//                                        //buf = proto.getPacket(TYPE_RESPONSE, CODE_LOGIN); //가독성 개선함
-//                                        //bis.read(buf);//수신버퍼 읽기시도후 buf배열에 읽은것 저장
-//
-//                                    } catch (IOException e) {
-//                                        e.printStackTrace();
-//                                    }
-
                                     int type = buf[0]; //타입
                                     System.out.println(type);
                                     int code = buf[1]; //코드
@@ -190,11 +181,63 @@ public class Server {
 
                                     boolean loginSuccess = memberDAO.login(loginId, loginPassword);
                                     if(loginSuccess)
-                                        proto.setProtocolType(TYPE_RESPONSE);
+                                        proto = new Protocol(TYPE_RESPONSE, CODE_LOGIN);
 //                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE);
                                     else
 //                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE_ERROR);
-                                        proto.setProtocolType(TYPE_RESPONSE_ERROR);
+                                        proto = new Protocol(TYPE_RESPONSE_ERROR, CODE_LOGIN);
+
+                                    bos.write(proto.getPacket());
+                                    bos.flush();
+                                    break;
+                            }
+                            break;
+
+                        case CODE_SIGNUP:
+                            switch (protocolType) {
+                                case TYPE_REQUEST:
+                                    System.out.println("회원가입요청 정상수신");
+                                    Protocol proto = null;
+
+                                    int type = buf[0]; //타입
+                                    System.out.println(type);
+                                    int code = buf[1]; //코드
+                                    System.out.println(code);
+
+                                    String signUpId = null, signUpPassword = null;
+                                    int pos = 2;
+
+
+                                    byte[] tmp = Arrays.copyOfRange(buf, pos, pos + 4);
+                                    int signUpIdLength = Protocol.byteArrayToInt(tmp);
+                                    pos +=4;
+
+                                    byte[] signUpIdArr = Arrays.copyOfRange(buf, pos, pos + signUpIdLength);
+                                    try {
+                                        signUpId = new String(signUpIdArr, "UTF-8");//추출 이름 String 변환해 저장
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                    pos += signUpIdLength;
+
+                                    int signUpPasswordLength = Protocol.byteArrayToInt(Arrays.copyOfRange(buf, pos, pos + 4));
+                                    pos +=4;
+
+                                    byte[] signUpPasswordArr = Arrays.copyOfRange(buf, pos, pos + signUpPasswordLength);
+                                    try {
+                                        signUpPassword = new String(signUpPasswordArr, "UTF-8");//추출 이름 String 변환해 저장
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                    pos += signUpPasswordLength;
+
+                                    boolean signUpSuccess = memberDAO.signUp(signUpId, signUpPassword);
+                                    if(signUpSuccess)
+                                        proto = new Protocol(TYPE_RESPONSE, CODE_SIGNUP);
+//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE);
+                                    else
+//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE_ERROR);
+                                        proto = new Protocol(TYPE_RESPONSE_ERROR, CODE_SIGNUP);
 
                                     bos.write(proto.getPacket());
                                     bos.flush();

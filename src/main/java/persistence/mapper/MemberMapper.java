@@ -12,7 +12,7 @@ public interface MemberMapper {
     @Select(selectAll)
     @Results(id = "resultSet", value = {
             @Result(property = "memberNumber", column = "memberNumber"),
-            @Result(property = "memberId", column = "memberId"),
+            @Result(property = "memberID", column = "memberID"),
             @Result(property = "memberPassword", column = "memberPassword"),
     })
     List<MemberDTO> selectAll();

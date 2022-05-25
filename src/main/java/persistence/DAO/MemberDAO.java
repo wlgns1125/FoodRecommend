@@ -46,7 +46,7 @@ public class MemberDAO {
         return !list.isEmpty();
     }
 
-    public boolean insertMember(String memberId, String memberPassword){
+    public boolean signUp(String memberId, String memberPassword){
         MemberDTO memberDTO = new MemberDTO(memberId, memberPassword);
         if(idExist(memberId))
             return false;

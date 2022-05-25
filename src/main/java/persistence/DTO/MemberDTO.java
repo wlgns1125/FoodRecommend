@@ -7,22 +7,22 @@ import lombok.Setter;
 @Setter
 public class MemberDTO {
     private int memberNumber;
-    private String memberId;
+    private String memberID;
     private String memberPassword;
 
     public MemberDTO(){}
 
     public MemberDTO(String memberId, String memberPassword){
-        this.memberId = memberId;
+        this.memberID = memberId;
         this.memberPassword = memberPassword;
     }
 
-    public String getMemberId(){
-        return memberId;
+    public String getMemberID(){
+        return memberID;
     }
 
     public String toString(){
-        return memberId + ", "  + memberPassword;
+        return memberID + ", "  + memberPassword;
     }
 
 }
