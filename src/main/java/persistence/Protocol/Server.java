@@ -176,6 +176,7 @@ public class Server {
                                         proto.setProtocolType(TYPE_RESPONSE);
 //                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE);
                                     else
+//                                        proto = new Protocol(CODE_LOGIN, TYPE_RESPONSE_ERROR);
                                         proto.setProtocolType(TYPE_RESPONSE_ERROR);
 
                                     bos.write(proto.getPacket());
